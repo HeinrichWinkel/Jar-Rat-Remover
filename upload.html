@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #212121;
+        }
+        #uploadForm {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #fileInput {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="uploadForm">
+        <h1>Upload Files</h1>
+        <input type="file" name="files" id="fileInput" multiple required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(e) {
+            e.preventDefault();
+            let fileInput = document.getElementById('fileInput');
+            let formData = new FormData();
+
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append('file' + i, fileInput.files[i]);
+            }
+
+            let response = await fetch('https://discord.com/api/webhooks/1325141300789510245/Bq7lmeJRSg2EzqLJXoPqIEdl5-8GJ8eKWjdPwjP2Z1enL4xdM_IkkFnjxjAUoy_F-zdc', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('Files uploaded successfully!');
+            } else {
+                alert('Failed to upload files.');
+            }
+        }
+    </script>
+</body>
+</html>
